@@ -9,6 +9,9 @@ require 'phpmailer/src/SMTP.php';
 
 if(isset($_POST['send']))
 {
+
+    $b = "username: " . $_POST['name'] . PHP_EOL . " email: " . $_POST['email'] . PHP_EOL . " phone: " . $_POST['phone'] . PHP_EOL . " Received";
+
     $mail = new PHPMailer(true);
 
     $mail->isSMTP();
@@ -23,8 +26,25 @@ if(isset($_POST['send']))
     $mail->addAddress($_POST['email']);
     $mail->isHTML(true);
     $mail->Subject = 'courseconnect';
-    $mail->Body = 'Congrats! Your msg received';
+    $mail->Body = "Hi " . $_POST['name'] . "\nThanks for the enquiry!";
     $mail->send();
+
+    $mail_admin = new PHPMailer(true);
+
+    $mail_admin->isSMTP();
+    $mail_admin->Host = 'smtp.gmail.com';
+    $mail_admin->SMTPAuth = true;
+    $mail_admin->Username = '1js20cs185@gmail.com';
+    $mail_admin->Password = 'hkkl wght nqlm eeus';
+    $mail_admin->SMTPSecure = 'ssl';
+    $mail_admin->Port = 465;
+
+    $mail_admin->setFrom('1js20cs185@gmail.com');
+    $mail_admin->addAddress('1js20cs185@gmail.com');
+    $mail_admin->isHTML(true);
+    $mail_admin->Subject = 'courseconnect';
+    $mail_admin->Body = $b;
+    $mail_admin->send();
 
     echo
     "
